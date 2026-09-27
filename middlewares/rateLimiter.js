@@ -1,6 +1,6 @@
 const rateLimit = require('express-rate-limit');
 
-// عام لكل الـ API
+
 exports.apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
@@ -9,7 +9,7 @@ exports.apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// ✅ أقوى على الـ auth عشان يمنع brute-force attacks
+
 exports.authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,

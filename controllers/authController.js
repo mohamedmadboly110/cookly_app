@@ -25,7 +25,6 @@ exports.register = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Please provide name, email and password', 400));
   }
 
-  // رسالة أوضح بدل ما نستنى خطأ الـ index المكرر
   const exists = await User.findOne({ email });
   if (exists) return next(new ErrorResponse('Email is already registered', 400));
 

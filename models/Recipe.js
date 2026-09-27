@@ -30,7 +30,6 @@ const recipeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ فهرس مركب: جلب وصفات مستخدم معين بسرعة
 recipeSchema.index({ user: 1, category: 1 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);

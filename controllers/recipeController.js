@@ -36,7 +36,7 @@ exports.getRecipe = asyncHandler(async (req, res, next) => {
 
 // @route POST /api/recipes | Private
 exports.createRecipe = asyncHandler(async (req, res, next) => {
-  // ✅ المستخدم من التوكن فقط - ممنوع التزوير من الـ body
+  
   req.body.user = req.user.id;
 
   const recipe = await Recipe.create(req.body);
@@ -48,12 +48,11 @@ exports.updateRecipe = asyncHandler(async (req, res, next) => {
   let recipe = await Recipe.findById(req.params.id);
   if (!recipe) return next(new ErrorResponse('Recipe not found', 404));
 
-  // ✅ فحص الملكية
+  
   if (recipe.user.toString() !== req.user.id && req.user.role !== 'admin') {
     return next(new ErrorResponse('Not authorized to update this recipe', 403));
   }
 
-  // ✅ منع تغيير المالك أو المتوسط من الـ body
   delete req.body.user;
   delete req.body.averageRating;
 
@@ -74,7 +73,7 @@ exports.deleteRecipe = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Not authorized to delete this recipe', 403));
   }
 
-  // ✅ حذف التقييمات المرتبطة (Cascade) بدل ما تفضل معلّقة
+ 
   await Review.deleteMany({ recipe: req.params.id });
 
   await recipe.deleteOne();

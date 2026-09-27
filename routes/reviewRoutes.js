@@ -6,11 +6,11 @@ const { protect } = require('../middlewares/authMiddleware');
 router
   .route('/')
   .get(reviewController.getReviews)
-  .post(protect, reviewController.createReview); // ✅ لازم مسجّل دخول
+  .post(protect, reviewController.createReview); 
 
 router
   .route('/:id')
   .patch(protect, reviewController.updateReview)
-  .delete(protect, reviewController.deleteReview); // ✅ + فحص الملكية جواه
+  .delete(protect, reviewController.deleteReview);
 
 module.exports = router;

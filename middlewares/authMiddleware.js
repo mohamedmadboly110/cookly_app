@@ -3,7 +3,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const ErrorResponse = require('../utils/ErrorResponse');
 const User = require('../models/User');
 
-// الحارس الأول: لازم توكن صالح + المستخدم لسه موجود
+
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -17,7 +17,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
-    // فرّق بين التوكن المنتهي والتوكن المزوّر
+    
     const msg = err.name === 'TokenExpiredError' ? 'Token expired, please login again' : 'Not authorized, token failed';
     return next(new ErrorResponse(msg, 401));
   }
@@ -29,7 +29,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   next();
 });
 
-// الحارس التاني: الصلاحيات حسب الدور (مثال: restrictTo('admin'))
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

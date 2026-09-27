@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// slugify بسيط بدون مكتبة خارجية
+
 const slugify = (text) =>
   text
     .toString()
@@ -31,7 +31,6 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ توليد الـ slug تلقائياً من الاسم
 categorySchema.pre('save', function () {
   if (this.isModified('name')) this.slug = slugify(this.name);
 });

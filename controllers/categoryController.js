@@ -31,7 +31,6 @@ exports.deleteCategory = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
   if (!category) return next(new ErrorResponse('Category not found', 404));
 
-  // ✅ ماينفعش تحذف فئة فيها وصفات
   const recipeCount = await Recipe.countDocuments({ category: req.params.id });
   if (recipeCount > 0) {
     return next(

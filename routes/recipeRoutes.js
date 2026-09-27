@@ -10,12 +10,12 @@ router.use('/:recipeId/reviews', reviewRouter);
 router
   .route('/')
   .get(recipeController.getRecipes)
-  .post(protect, recipeController.createRecipe); // ✅ الحماية شغالة
+  .post(protect, recipeController.createRecipe); 
 
 router
   .route('/:id')
   .get(recipeController.getRecipe)
-  .patch(protect, recipeController.updateRecipe)   // ✅ + فحص الملكية جواه
-  .delete(protect, recipeController.deleteRecipe); // ✅ + فحص الملكية جواه
+  .patch(protect, recipeController.updateRecipe)
+  .delete(protect, recipeController.deleteRecipe); 
 
 module.exports = router;

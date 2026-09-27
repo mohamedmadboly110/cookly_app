@@ -8,7 +8,7 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/errorMiddleware');
 const { authLimiter, apiLimiter } = require('./middlewares/rateLimiter');
 
-// ✅ فشل سريع لو الإعدادات الأساسية ناقصة (بدل ما يشتغل بأسرار ضعيفة)
+
 if (!process.env.JWT_SECRET) {
   console.error('FATAL: JWT_SECRET is missing in .env');
   process.exit(1);
@@ -30,17 +30,16 @@ const app = express();
 // ✅ 1) Security headers (XSS, clickjacking, sniffing...)
 app.use(helmet());
 
-// ✅ 2) Rate limiting عام + أقوى على الـ auth
+
 app.use('/api', apiLimiter);
 app.use('/api/auth', authLimiter);
 
-// Body parser مع حد أقصى لحجم البيانات
 app.use(express.json({ limit: '10kb' }));
 
-// ✅ 3) منع NoSQL Injection ($gt, $where...) في body/params/query
+
 app.use(mongoSanitize());
 
-// ✅ 4) منع HTTP Parameter Pollution
+
 app.use(hpp());
 
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
@@ -57,7 +56,7 @@ app.use((req, res, next) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
-// لازم بعد كل الراوتات
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
